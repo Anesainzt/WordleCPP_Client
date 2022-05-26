@@ -23,7 +23,7 @@ int menuAdministrador(){
 	cout<<"2.BORRAR PALABRA"<<endl;
 	cout<<"3.Cerrar sesion "<<endl;
 	cout<<"4.Salir"<<endl;
-	cout<<"Elige una opciÃ³n: ";
+	cout<<"Elige una opcion: ";
 	cin>>opcion;
 	return opcion;
 }
@@ -82,21 +82,21 @@ int main(int argc, char *argv[]) {
 
 	/*EMPIEZA EL PROGRAMA DEL CLIENTE*/
 	int opcion,opcionA,opcionC;
-	char nombre[51],con[20];
-	int resul;
+	char nombre[51],con[20],usuarioNuevo[51],contraseniaNueva[20];
+	int resul,resulRegistro;
 	do{
 		opcion = menu();
 		sprintf(sendBuff,"%d",opcion);
 		send(s, sendBuff, sizeof(sendBuff), 0);
 		switch(opcion){
-		case 1: break;
+		case 1:
 			cout<<"Nombre: ";cin>>nombre;
 			cout<<"Contrasena: ";cin>>con;
 			sprintf(sendBuff,"%s",nombre);
-			send(s, sendBuff, sizeof(sendBuff), 0); //Envï¿½o el nombre al servidor
+			send(s, sendBuff, sizeof(sendBuff), 0); //Envia el nombre al servidor
 			sprintf(sendBuff,"%s",con);
-			send(s, sendBuff, sizeof(sendBuff), 0); //Envï¿½o la contraseï¿½a al servidor
-			recv(s, recvBuff, sizeof(recvBuff), 0); //Recibe el resultado del Inicio de Sesiï¿½n
+			send(s, sendBuff, sizeof(sendBuff), 0); //Envia la contrasenia al servidor
+			recv(s, recvBuff, sizeof(recvBuff), 0); //Recibe el resultado del Inicio de Sesion
 			sscanf(recvBuff,"%d",&resul);
 			cout<<"RESULTADO: "<<resul<<endl;
 			if(resul==1){
@@ -106,7 +106,7 @@ int main(int argc, char *argv[]) {
 						case '1': break;
 						case '2': break;
 						case '0': break;
-						default: cout<<"La opciï¿½n no es correcta"<<endl;
+						default: cout<<"La opcion no es correcta"<<endl;
 					}
 				}while(opcionA!='0');
 			}else if(resul ==2){
@@ -116,14 +116,30 @@ int main(int argc, char *argv[]) {
 						case '1': break;
 						case '2': break;
 						case '0': break;
-						default: cout<<"La opciï¿½n no es correcta"<<endl;
+						default: cout<<"La opcion no es correcta"<<endl;
 					}
 				}while(opcionC!='0');
 			}else{
 				cout<<"El Inicio de Sesiï¿½n no ha sido correcto"<<endl;
 			}
 			break;
-		case 2: break;
+		case 2:
+			cout<<"\n****REGISTRAR NUEVO USUARIO****\n "<<endl;
+			cout<<"USUARIO: ";cin>>usuarioNuevo;
+			cout<<"CONTRASENIA: ";cin>>contraseniaNueva;
+			sprintf(sendBuff,"%s",usuarioNuevo);
+			send(s, sendBuff, sizeof(sendBuff), 0);//Envia el nombre de Usuaio al servidor
+			sprintf(sendBuff,"%s",contraseniaNueva);
+			send(s, sendBuff, sizeof(sendBuff), 0);//Envia la contraseña nueva al servidor
+			recv(s, recvBuff, sizeof(recvBuff), 0); //Recibe el resultado del registro
+			sscanf(recvBuff,"%d",&resulRegistro);			//0 si esta todo bien 1 si ya existe
+			cout<<"RESULTADO: "<<resulRegistro<<endl;
+			if(resulRegistro==0){
+				cout<<"Registrado correctamente"<<endl;
+			}else{
+				cout<<"El usuario ya se encuentra registrado"<<endl;
+			}
+			break;
 		case '0': cout<<"AGUR"<<endl;break;
 		default: cout<<"La opciï¿½n seleccionada no es correcta"<<endl;
 		}
