@@ -120,7 +120,7 @@ int main(int argc, char *argv[]) {
 					}
 				}while(opcionC!='0');
 			}else{
-				cout<<"El Inicio de Sesi�n no ha sido correcto"<<endl;
+				cout<<"El Inicio de Sesion no ha sido correcto"<<endl;
 			}
 			break;
 		case 2:
@@ -140,11 +140,11 @@ int main(int argc, char *argv[]) {
 				cout<<"El usuario ya se encuentra registrado"<<endl;
 			}
 			break;
-		case '0': cout<<"AGUR"<<endl;break;
-		default: cout<<"La opci�n seleccionada no es correcta"<<endl;
+		case 3: cout<<"AGUR"<<endl;break;
+		default: cout<<"La opcion seleccionada no es correcta"<<endl;
 		}
 
-	}while(opcion!='0');
+	}while(opcion == 3);
 
 	/*ACABA EL PROGRAMA DEL CLIENTE*/
 	// CLOSING the socket and cleaning Winsock...
