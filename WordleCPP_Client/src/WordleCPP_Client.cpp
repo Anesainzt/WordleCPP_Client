@@ -105,7 +105,12 @@ int main(int argc, char *argv[]) {
 					switch(opcionA){
 						case '1': break;
 						case '2': break;
-						case '0': break;
+						case '3': break;
+						case '4':
+							cout<<"AGUR"<<endl;
+							closesocket(s);
+							WSACleanup();
+							break;
 						default: cout<<"La opcion no es correcta"<<endl;
 					}
 				}while(opcionA!='0');
@@ -115,7 +120,12 @@ int main(int argc, char *argv[]) {
 					switch(opcionC){
 						case '1': break;
 						case '2': break;
-						case '0': break;
+						case '3': break;
+						case '4':
+							cout<<"AGUR"<<endl;
+							closesocket(s);
+							WSACleanup();
+							break;
 						default: cout<<"La opcion no es correcta"<<endl;
 					}
 				}while(opcionC!='0');
