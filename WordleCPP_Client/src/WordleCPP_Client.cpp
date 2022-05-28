@@ -87,7 +87,7 @@ int main(int argc, char *argv[]) {
 	do{
 		opcion = menu();
 		sprintf(sendBuff,"%d",opcion);
-		send(s, sendBuff, sizeof(sendBuff), 0);
+		send(s, sendBuff, sizeof(sendBuff), 0);   //Funcion para mandar el numero al server
 		switch(opcion){
 		case 1:
 			cout<<"Nombre: ";cin>>nombre;
@@ -140,7 +140,7 @@ int main(int argc, char *argv[]) {
 			sprintf(sendBuff,"%s",usuarioNuevo);
 			send(s, sendBuff, sizeof(sendBuff), 0);//Envia el nombre de Usuaio al servidor
 			sprintf(sendBuff,"%s",contraseniaNueva);
-			send(s, sendBuff, sizeof(sendBuff), 0);//Envia la contraseña nueva al servidor
+			send(s, sendBuff, sizeof(sendBuff), 0);//Envia la contraseï¿½a nueva al servidor
 			recv(s, recvBuff, sizeof(recvBuff), 0); //Recibe el resultado del registro
 			sscanf(recvBuff,"%d",&resulRegistro);			//0 si esta todo bien 1 si ya existe
 			cout<<"RESULTADO: "<<resulRegistro<<endl;
