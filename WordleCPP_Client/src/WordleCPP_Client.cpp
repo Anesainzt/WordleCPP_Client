@@ -90,8 +90,10 @@ int main(int argc, char *argv[]) {
 		send(s, sendBuff, sizeof(sendBuff), 0);   //Funcion para mandar el numero al server
 		switch(opcion){
 		case 1:
-			cout<<"Nombre: ";cin>>nombre;
-			cout<<"Contrasena: ";cin>>con;
+			cout<<"Nombre: ";
+			cin>>nombre;
+			cout<<"Contrasena: ";
+			cin>>con;
 			sprintf(sendBuff,"%s",nombre);
 			send(s, sendBuff, sizeof(sendBuff), 0); //Envia el nombre al servidor
 			sprintf(sendBuff,"%s",con);
@@ -144,7 +146,7 @@ int main(int argc, char *argv[]) {
 			recv(s, recvBuff, sizeof(recvBuff), 0); //Recibe el resultado del registro
 			sscanf(recvBuff,"%d",&resulRegistro);			//0 si esta todo bien 1 si ya existe
 			cout<<"RESULTADO: "<<resulRegistro<<endl;
-			if(resulRegistro==0){
+			if(resulRegistro==1){
 				cout<<"Registrado correctamente"<<endl;
 			}else{
 				cout<<"El usuario ya se encuentra registrado"<<endl;
