@@ -20,7 +20,7 @@ int menuAdministrador(){
 	int opcion;
 	cout<<"**** MENU ADMINISTRADOR ****"<<endl;
 	cout<<"1. ANIADIR PALABRA"<<endl;
-	cout<<"2.BORRAR PALABRA"<<endl;
+	cout<<"2. BORRAR PALABRA"<<endl; //FALLA
 	cout<<"4.Salir"<<endl;
 	cout<<"Elige una opcion: ";
 	cin>>opcion;
@@ -29,8 +29,8 @@ int menuAdministrador(){
 int menuCliente(){
 	int opcion;
 	cout<<"****BIENVENIDO, JUGADOR****"<<endl;
-	cout<<"1. JUGAR"<<endl;
-	cout<<"2.Ver puntuaciones"<<endl;
+	cout<<"1. JUGAR"<<endl; //FALLA
+	cout<<"2.Ver puntuaciones"<<endl; //FALLA
 	cout<<"3.Salir"<<endl;
 	cout<<"Elige una opcion: ";
 	cin>>opcion;
