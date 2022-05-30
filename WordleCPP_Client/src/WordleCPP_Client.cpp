@@ -82,8 +82,8 @@ int main(int argc, char *argv[]) {
 
 	/*EMPIEZA EL PROGRAMA DEL CLIENTE*/
 	int opcion,opcionA,opcionC;
-	char nombre[51],con[20],usuarioNuevo[51],contraseniaNueva[20];
-	int resul,resulRegistro;
+	char nombre[51],con[20],usuarioNuevo[51],contraseniaNueva[20], palabraNueva[6], tematica[20];
+	int resul,resulRegistro, resulPalabra;
 	do{
 		opcion = menu();
 		sprintf(sendBuff,"%d",opcion);
@@ -105,24 +105,44 @@ int main(int argc, char *argv[]) {
 				do{
 					opcionA = menuAdministrador();
 					switch(opcionA){
-						case '1': break;
-						case '2': break;
-						case '3': break;
-						case '4':
+						case 1:
+							//AÑADIR LA PALABRA EN LA BD CON LA TEMÁTICA
+							cout<<"PALABRA: ";cin>>palabraNueva;
+							cout<<"TEMÁTICA: ";cin>>tematica;
+							sprintf(sendBuff,"%s",palabraNueva);
+							send(s, sendBuff, sizeof(sendBuff), 0);//Envia la palabra al servidor
+							sprintf(sendBuff,"%s",tematica);
+							send(s, sendBuff, sizeof(sendBuff), 0);//Envia la temática al servidor
+							recv(s, recvBuff, sizeof(recvBuff), 0); //Recibe el resultado del insertar la palabra
+							sscanf(recvBuff,"%d",&resulPalabra);
+							if(resulPalabra==0){
+								cout<<"Añadida correctamente"<<endl;
+							}else{
+								cout<<"No Se ha podido añadir"<<endl;
+							}
+							break;
+							//AÑADIR LA PALABRA EN LA BD CON LA TEMÁTICA
+						case 2: break;//BORRAR UNA PALABRA DE LA BBDD
+						case 3:
+							menu();
+							break; //CERRAR SESIÓN
+						case 4:
 							cout<<"AGUR"<<endl;
 							closesocket(s);
 							WSACleanup();
 							break;
 						default: cout<<"La opcion no es correcta"<<endl;
 					}
-				}while(opcionA!='0');
+				}while(opcionA!=0);
 			}else if(resul ==2){
 				do{
 					opcionC = menuCliente();
 					switch(opcionC){
-						case '1': break;
-						case '2': break;
-						case '3': break;
+						case '1': break; //JUGAR
+						case '2': break; //VER PUNTUACIONES
+						case '3':
+							menu();
+							break; //CERRAR SESIÓN
 						case '4':
 							cout<<"AGUR"<<endl;
 							closesocket(s);
@@ -144,7 +164,7 @@ int main(int argc, char *argv[]) {
 			sprintf(sendBuff,"%s",contraseniaNueva);
 			send(s, sendBuff, sizeof(sendBuff), 0);//Envia la contrase�a nueva al servidor
 			recv(s, recvBuff, sizeof(recvBuff), 0); //Recibe el resultado del registro
-			sscanf(recvBuff,"%d",&resulRegistro);			//0 si esta todo bien 1 si ya existe
+			sscanf(recvBuff,"%d",&resulRegistro);			//1 si esta todo bien 0 si ya existe
 			cout<<"RESULTADO: "<<resulRegistro<<endl;
 			if(resulRegistro==1){
 				cout<<"Registrado correctamente"<<endl;
