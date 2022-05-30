@@ -12,7 +12,8 @@ int menu(){
 	cout<<"****BIENVENIDO A WORDC****"<<endl;
 	cout<<"1. INICIAR SESION"<<endl;
 	cout<<"2. REGISTRARSE"<<endl;
-	cout<<"3.Salir"<<endl;
+	cout<<"3. VER PUNTUACIONES"<<endl;
+	cout<<"4. Salir"<<endl;
 	cout<<"Elige una opcion: ";
 	cin>>num;
 	return num;
@@ -77,9 +78,10 @@ int main(int argc, char *argv[]) {
 			ntohs(server.sin_port));
 
 	/*EMPIEZA EL PROGRAMA DEL CLIENTE*/
-	int opcion,opcionA,opcionC,a,b;
-	char nombre[51],con[20],palabraJuego[5],usuarioNuevo[51],contraseniaNueva[20], palabraNueva[6], tematica[20], borrarPalabra[6], borrarTematica[20], tematicaJuego[20];
+	int opcion,opcionA,a,b;
+	char nombre[51],con[20],palabraJuego[5],usuarioNuevo[51],contraseniaNueva[20], palabraNueva[6], tematica[20], borrarPalabra[6], borrarTematica[20], nombrePunto[20];
 	int resul,resulRegistro, resulPalabra, resulPalabraBorrada;
+	char * resulPuntuacion;
 
 
 	do{
@@ -179,6 +181,15 @@ int main(int argc, char *argv[]) {
 			}while(resulRegistro ==0);
 			break;
 		case 3:
+			cout<<" PUNTUACIONES "<<endl;
+			cout<<"Introduce tu nombre de usuario para ver tu puntuacion: ";cin>>nombrePunto;// hay que cambiarlo, se tiene que conseguir el usuario registrado en ese momento
+			send(s, sendBuff, sizeof(sendBuff), 0);
+			recv(s, recvBuff, sizeof(recvBuff), 0);
+			sprintf(sendBuff,"%s",resulPuntuacion);
+			cout<<"PUNTUACION..."<<endl;
+			cout<<resulPuntuacion<<endl;
+			break;
+		case 4:
 			cout<<"AGUR"<<endl;
 			closesocket(s);
 			WSACleanup();
