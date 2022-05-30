@@ -81,9 +81,11 @@ int main(int argc, char *argv[]) {
 			ntohs(server.sin_port));
 
 	/*EMPIEZA EL PROGRAMA DEL CLIENTE*/
-	int opcion,opcionA,opcionC,a,b,c;
-	char nombre[51],con[20],usuarioNuevo[51],contraseniaNueva[20], palabraNueva[6], tematica[20], borrarPalabra[6];
+	int opcion,opcionA,opcionC,a,b;
+	char nombre[51],con[20],usuarioNuevo[51],contraseniaNueva[20], palabraNueva[6], tematica[20], borrarPalabra[6], borrarTematica[20];
 	int resul,resulRegistro, resulPalabra, resulPalabraBorrada;
+
+
 	do{
 		opcion = menu();
 		sprintf(sendBuff,"%d",opcion);
@@ -125,30 +127,31 @@ int main(int argc, char *argv[]) {
 							}else{
 								cout<<"No Se ha podido añadir"<<endl;
 							}
-							WSACleanup();
 							break;
-							//AÑADIR LA PALABRA EN LA BD CON LA TEMÁTICA
+
 						case 2: //BORRAR UNA PALABRA DE LA BBDD
-							b=2;
+							b = 2;
 							sprintf(sendBuff,"%d",b);
 							send(s, sendBuff, sizeof(sendBuff), 0);//Envia la opcion seleccionada
-							cout<<"PALABRA QUE SE QUIERE BORRAR: ";cin>>borrarPalabra;
-
+							cout<<"PALABRA: ";cin>>borrarPalabra;
+							cout<<"TEMÁTICA: ";cin>>borrarTematica;
 							sprintf(sendBuff,"%s",borrarPalabra);
 							send(s, sendBuff, sizeof(sendBuff), 0);//Envia la palabra al servidor
-							//ESPERA AL SERVIDOR
-							recv(s, recvBuff, sizeof(recvBuff), 0); //Recibe el resultado de borrar la palabra
-							sscanf(recvBuff,"%d",&resulPalabraBorrada);//0 si se ha borrado correctamente
+							sprintf(sendBuff,"%s",borrarTematica);
+							send(s, sendBuff, sizeof(sendBuff), 0);//Envia la temática al servidor
+							//ESPERA RESPUESTA
+							recv(s, recvBuff, sizeof(recvBuff), 0); //Recibe el resultado del insertar la palabra
+							sscanf(recvBuff,"%d",&resulPalabraBorrada);
 							if(resulPalabraBorrada==0){
-								cout<<"Pablabra borrada correctamente"<<endl;
+								cout<<"Borrada correctamente"<<endl;
+
 							}else{
 								cout<<"No Se ha podido borrar"<<endl;
 							}
-							WSACleanup();
 							break;
+
 						case 3:
-							closesocket(s);
-							WSACleanup();
+
 							menu();
 							break; //CERRAR SESIÓN
 						case 4:
@@ -179,6 +182,7 @@ int main(int argc, char *argv[]) {
 				}while(opcionC!=0);
 			}else{
 				cout<<"El Inicio de Sesion no ha sido correcto"<<endl;
+				menu();
 			}
 			break;
 		case 2:
