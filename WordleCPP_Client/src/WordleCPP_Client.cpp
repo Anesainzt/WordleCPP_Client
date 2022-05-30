@@ -81,7 +81,7 @@ int main(int argc, char *argv[]) {
 			ntohs(server.sin_port));
 
 	/*EMPIEZA EL PROGRAMA DEL CLIENTE*/
-	int opcion,opcionA,opcionC;
+	int opcion,opcionA,opcionC,a,b,c;
 	char nombre[51],con[20],usuarioNuevo[51],contraseniaNueva[20], palabraNueva[6], tematica[20], borrarPalabra[6];
 	int resul,resulRegistro, resulPalabra, resulPalabraBorrada;
 	do{
@@ -107,7 +107,8 @@ int main(int argc, char *argv[]) {
 					switch(opcionA){
 						case 1:
 							//AÑADIR LA PALABRA EN LA BD CON LA TEMÁTICA
-							sprintf(sendBuff,"%d",opcionA);
+							a = 1;
+							sprintf(sendBuff,"%d",a);
 							send(s, sendBuff, sizeof(sendBuff), 0);//Envia la opcion seleccionada
 							cout<<"PALABRA: ";cin>>palabraNueva;
 							cout<<"TEMÁTICA: ";cin>>tematica;
@@ -124,14 +125,18 @@ int main(int argc, char *argv[]) {
 							}else{
 								cout<<"No Se ha podido añadir"<<endl;
 							}
+							WSACleanup();
 							break;
 							//AÑADIR LA PALABRA EN LA BD CON LA TEMÁTICA
 						case 2: //BORRAR UNA PALABRA DE LA BBDD
-							sprintf(sendBuff,"%d",opcionA);
+							b=2;
+							sprintf(sendBuff,"%d",b);
 							send(s, sendBuff, sizeof(sendBuff), 0);//Envia la opcion seleccionada
 							cout<<"PALABRA QUE SE QUIERE BORRAR: ";cin>>borrarPalabra;
+
 							sprintf(sendBuff,"%s",borrarPalabra);
 							send(s, sendBuff, sizeof(sendBuff), 0);//Envia la palabra al servidor
+							//ESPERA AL SERVIDOR
 							recv(s, recvBuff, sizeof(recvBuff), 0); //Recibe el resultado de borrar la palabra
 							sscanf(recvBuff,"%d",&resulPalabraBorrada);//0 si se ha borrado correctamente
 							if(resulPalabraBorrada==0){
@@ -139,8 +144,11 @@ int main(int argc, char *argv[]) {
 							}else{
 								cout<<"No Se ha podido borrar"<<endl;
 							}
+							WSACleanup();
 							break;
 						case 3:
+							closesocket(s);
+							WSACleanup();
 							menu();
 							break; //CERRAR SESIÓN
 						case 4:
