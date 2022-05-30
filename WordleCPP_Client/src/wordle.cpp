@@ -24,7 +24,7 @@ void jugarWordle(char *palabraJuego){
         /* Aqui empezaria el codigo de Iñigo para seleccionar una palabra de la bd*/
 
 
-		char respuesta[6]= "adora";/* En esta variable va la palabra seleccionada que hay que adivinar*/
+		/* En esta variable va la palabra seleccionada que hay que adivinar*/
 
         /* Aqui terminaria el codigo de Iñigo para seleccionar una palabra de la bd*/
 
@@ -50,7 +50,7 @@ void jugarWordle(char *palabraJuego){
 			numIntentos--;
 
 			//VER SI SE ACIERTA O NO LA PALABRA
-			seHaAcertado=procesarPalabra(respuesta, intento);
+			seHaAcertado=procesarPalabra(palabraJuego, intento);
 
 
 		}
@@ -67,7 +67,7 @@ void jugarWordle(char *palabraJuego){
 
 			switch(opcion){
 				case 1:
-					jugarWordle();
+					jugarWordle(palabraJuego);
 					break;
 				case 2:
 					//menuUsuario(db);
@@ -83,14 +83,14 @@ void jugarWordle(char *palabraJuego){
 			int opcion;
 			SetConsoleTextAttribute(consola,7);
 
-			cout <<"\nHas agotado los intentos...La palabra correcta era "<<respuesta<<endl;
+			cout <<"\nHas agotado los intentos...La palabra correcta era "<<palabraJuego<<endl;
 			cout <<"1= Seguir jugando\n2= Volver al menu\n";
 			cin >> opcion;
 
 
 			switch(opcion){
 							case 1:
-									jugarWordle();
+									jugarWordle(palabraJuego);
 									break;
 							case 2:
 									//menuUsuario(db);

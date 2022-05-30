@@ -161,8 +161,14 @@ int main(int argc, char *argv[]) {
 						case 1:
 							sprintf(sendBuff,"%d",opcionC);
 							send(s, sendBuff, sizeof(sendBuff), 0);//Envia la temática al servidor
-							cout<<"Objetos"<<endl;
-							cout<<"Tematica Seleccionada: ";cin>>tematicaJuego;
+							cout<<"Seleccionar temática: "<<endl;
+							cout<<"1.Verbos"<<endl;
+							cout<<"2.Objetos"<<endl;
+							cout<<"3.Cuerpo humano"<<endl;
+							cout<<"4.Animales"<<endl;
+							cout<<"5.Lugares"<<endl;
+							cout<<"6.Todas las palabras"<<endl;
+							cout<<"Tematica Seleccionada: (Numero)";cin>>tematicaJuego;
 							sprintf(sendBuff,"%d",tematicaJuego);
 							send(s, sendBuff, sizeof(sendBuff), 0);
 							//ESPERA RESPUESTA
