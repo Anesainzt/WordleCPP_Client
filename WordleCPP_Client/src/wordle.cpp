@@ -7,7 +7,7 @@
 
 using namespace std;
 
-void jugarWordle(/*sqlite3 * db*/){
+void jugarWordle(char *palabraJuego){
 	HANDLE consola=GetStdHandle(STD_OUTPUT_HANDLE);
 
 	//CARGAR PALABRAS

@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <winsock2.h>
 #include <iostream>
+#include "wordle.h"
 #define SERVER_IP "127.0.0.1"
 #define SERVER_PORT 6000
 
@@ -79,8 +80,8 @@ int main(int argc, char *argv[]) {
 
 	/*EMPIEZA EL PROGRAMA DEL CLIENTE*/
 	int opcion,opcionA,opcionC,a,b;
-	char nombre[51],con[20],usuarioNuevo[51],contraseniaNueva[20], palabraNueva[6], tematica[20], borrarPalabra[6], borrarTematica[20];
-	int resul,resulRegistro, resulPalabra, resulPalabraBorrada, resulAgur;
+	char nombre[51],con[20],palabraJuego[5],usuarioNuevo[51],contraseniaNueva[20], palabraNueva[6], tematica[20], borrarPalabra[6], borrarTematica[20], tematicaJuego[20];
+	int resul,resulRegistro, resulPalabra, resulPalabraBorrada;
 
 
 	do{
@@ -157,7 +158,18 @@ int main(int argc, char *argv[]) {
 				do{
 					opcionC = menuCliente();
 					switch(opcionC){
-						case 1: break; //JUGAR
+						case 1:
+							sprintf(sendBuff,"%d",opcionC);
+							send(s, sendBuff, sizeof(sendBuff), 0);//Envia la temática al servidor
+							cout<<"Objetos"<<endl;
+							cout<<"Tematica Seleccionada: ";cin>>tematicaJuego;
+							sprintf(sendBuff,"%d",tematicaJuego);
+							send(s, sendBuff, sizeof(sendBuff), 0);
+							//ESPERA RESPUESTA
+							recv(s, recvBuff, sizeof(recvBuff), 0);
+							sprintf(recvBuff,"%s",palabraJuego);
+							jugarWordle(palabraJuego);
+							break;
 						case 2://VER PUNTUACIONES
 						break;
 						case 3:
