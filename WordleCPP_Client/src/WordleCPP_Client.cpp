@@ -82,8 +82,8 @@ int main(int argc, char *argv[]) {
 
 	/*EMPIEZA EL PROGRAMA DEL CLIENTE*/
 	int opcion,opcionA,opcionC;
-	char nombre[51],con[20],usuarioNuevo[51],contraseniaNueva[20], palabraNueva[6], tematica[20];
-	int resul,resulRegistro, resulPalabra;
+	char nombre[51],con[20],usuarioNuevo[51],contraseniaNueva[20], palabraNueva[6], tematica[20], borrarPalabra[6];
+	int resul,resulRegistro, resulPalabra, resulPalabraBorrada;
 	do{
 		opcion = menu();
 		sprintf(sendBuff,"%d",opcion);
@@ -107,22 +107,39 @@ int main(int argc, char *argv[]) {
 					switch(opcionA){
 						case 1:
 							//AÑADIR LA PALABRA EN LA BD CON LA TEMÁTICA
+							sprintf(sendBuff,"%d",opcionA);
+							send(s, sendBuff, sizeof(sendBuff), 0);//Envia la opcion seleccionada
 							cout<<"PALABRA: ";cin>>palabraNueva;
 							cout<<"TEMÁTICA: ";cin>>tematica;
 							sprintf(sendBuff,"%s",palabraNueva);
 							send(s, sendBuff, sizeof(sendBuff), 0);//Envia la palabra al servidor
 							sprintf(sendBuff,"%s",tematica);
 							send(s, sendBuff, sizeof(sendBuff), 0);//Envia la temática al servidor
+							//ESPERA RESPUESTA
 							recv(s, recvBuff, sizeof(recvBuff), 0); //Recibe el resultado del insertar la palabra
 							sscanf(recvBuff,"%d",&resulPalabra);
 							if(resulPalabra==0){
 								cout<<"Añadida correctamente"<<endl;
+
 							}else{
 								cout<<"No Se ha podido añadir"<<endl;
 							}
 							break;
 							//AÑADIR LA PALABRA EN LA BD CON LA TEMÁTICA
-						case 2: break;//BORRAR UNA PALABRA DE LA BBDD
+						case 2: //BORRAR UNA PALABRA DE LA BBDD
+							sprintf(sendBuff,"%d",opcionA);
+							send(s, sendBuff, sizeof(sendBuff), 0);//Envia la opcion seleccionada
+							cout<<"PALABRA QUE SE QUIERE BORRAR: ";cin>>borrarPalabra;
+							sprintf(sendBuff,"%s",borrarPalabra);
+							send(s, sendBuff, sizeof(sendBuff), 0);//Envia la palabra al servidor
+							recv(s, recvBuff, sizeof(recvBuff), 0); //Recibe el resultado de borrar la palabra
+							sscanf(recvBuff,"%d",&resulPalabraBorrada);//0 si se ha borrado correctamente
+							if(resulPalabraBorrada==0){
+								cout<<"Pablabra borrada correctamente"<<endl;
+							}else{
+								cout<<"No Se ha podido borrar"<<endl;
+							}
+							break;
 						case 3:
 							menu();
 							break; //CERRAR SESIÓN
@@ -138,19 +155,20 @@ int main(int argc, char *argv[]) {
 				do{
 					opcionC = menuCliente();
 					switch(opcionC){
-						case '1': break; //JUGAR
-						case '2': break; //VER PUNTUACIONES
-						case '3':
+						case 1: break; //JUGAR
+						case 2://VER PUNTUACIONES
+						break;
+						case 3:
 							menu();
 							break; //CERRAR SESIÓN
-						case '4':
+						case 4:
 							cout<<"AGUR"<<endl;
 							closesocket(s);
 							WSACleanup();
 							break;
 						default: cout<<"La opcion no es correcta"<<endl;
 					}
-				}while(opcionC!='0');
+				}while(opcionC!=0);
 			}else{
 				cout<<"El Inicio de Sesion no ha sido correcto"<<endl;
 			}
