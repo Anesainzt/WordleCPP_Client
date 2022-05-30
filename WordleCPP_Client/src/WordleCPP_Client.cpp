@@ -21,7 +21,6 @@ int menuAdministrador(){
 	cout<<"**** MENU ADMINISTRADOR ****"<<endl;
 	cout<<"1. ANIADIR PALABRA"<<endl;
 	cout<<"2.BORRAR PALABRA"<<endl;
-	cout<<"3.Cerrar sesion "<<endl;
 	cout<<"4.Salir"<<endl;
 	cout<<"Elige una opcion: ";
 	cin>>opcion;
@@ -32,13 +31,11 @@ int menuCliente(){
 	cout<<"****BIENVENIDO, JUGADOR****"<<endl;
 	cout<<"1. JUGAR"<<endl;
 	cout<<"2.Ver puntuaciones"<<endl;
-	cout<<"3.Cerrar sesion"<<endl;
-	cout<<"4.Salir"<<endl;
+	cout<<"3.Salir"<<endl;
 	cout<<"Elige una opcion: ";
 	cin>>opcion;
 	return opcion;
 }
-
 
 
 int main(int argc, char *argv[]) {
@@ -83,7 +80,7 @@ int main(int argc, char *argv[]) {
 	/*EMPIEZA EL PROGRAMA DEL CLIENTE*/
 	int opcion,opcionA,opcionC,a,b;
 	char nombre[51],con[20],usuarioNuevo[51],contraseniaNueva[20], palabraNueva[6], tematica[20], borrarPalabra[6], borrarTematica[20];
-	int resul,resulRegistro, resulPalabra, resulPalabraBorrada;
+	int resul,resulRegistro, resulPalabra, resulPalabraBorrada, resulAgur;
 
 
 	do{
@@ -151,13 +148,7 @@ int main(int argc, char *argv[]) {
 							break;
 
 						case 3:
-
-							menu();
-							break; //CERRAR SESIÓN
-						case 4:
-							cout<<"AGUR"<<endl;
-							closesocket(s);
-							WSACleanup();
+							exit(0);
 							break;
 						default: cout<<"La opcion no es correcta"<<endl;
 					}
@@ -170,12 +161,10 @@ int main(int argc, char *argv[]) {
 						case 2://VER PUNTUACIONES
 						break;
 						case 3:
-							menu();
-							break; //CERRAR SESIÓN
-						case 4:
 							cout<<"AGUR"<<endl;
 							closesocket(s);
 							WSACleanup();
+							exit(0);
 							break;
 						default: cout<<"La opcion no es correcta"<<endl;
 					}
@@ -186,6 +175,7 @@ int main(int argc, char *argv[]) {
 			}
 			break;
 		case 2:
+			do{
 			cout<<"\n****REGISTRAR NUEVO USUARIO****\n "<<endl;
 			cout<<"USUARIO: ";cin>>usuarioNuevo;
 			cout<<"CONTRASENIA: ";cin>>contraseniaNueva;
@@ -194,15 +184,20 @@ int main(int argc, char *argv[]) {
 			sprintf(sendBuff,"%s",contraseniaNueva);
 			send(s, sendBuff, sizeof(sendBuff), 0);//Envia la contrase�a nueva al servidor
 			recv(s, recvBuff, sizeof(recvBuff), 0); //Recibe el resultado del registro
-			sscanf(recvBuff,"%d",&resulRegistro);			//1 si esta todo bien 0 si ya existe
-			cout<<"RESULTADO: "<<resulRegistro<<endl;
+			sscanf(recvBuff,"%d",&resulRegistro);//1 si esta todo bien 0 si ya existe
 			if(resulRegistro==1){
 				cout<<"Registrado correctamente"<<endl;
 			}else{
 				cout<<"El usuario ya se encuentra registrado"<<endl;
 			}
+			}while(resulRegistro ==0);
 			break;
-		case 3: cout<<"AGUR"<<endl;break;
+		case 3:
+			cout<<"AGUR"<<endl;
+			closesocket(s);
+			WSACleanup();
+			exit(0);
+			break;
 		default: cout<<"La opcion seleccionada no es correcta"<<endl;
 		}
 
