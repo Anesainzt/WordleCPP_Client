@@ -7,6 +7,7 @@
 
 using namespace std;
 
+//NO LO USAMOS PORQUE AL FINAL LO HEMOS IMPLEMENTADO EN C
 void jugarWordle(char *palabraJuego){
 	HANDLE consola=GetStdHandle(STD_OUTPUT_HANDLE);
 
