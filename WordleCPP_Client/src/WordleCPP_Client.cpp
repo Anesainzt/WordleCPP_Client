@@ -21,21 +21,19 @@ int menuAdministrador(){
 	int opcion;
 	cout<<"**** MENU ADMINISTRADOR ****"<<endl;
 	cout<<"1. ANIADIR PALABRA"<<endl;
-	cout<<"2. BORRAR PALABRA"<<endl; //FALLA
+	cout<<"2. BORRAR PALABRA"<<endl;
 	cout<<"4.Salir"<<endl;
 	cout<<"Elige una opcion: ";
 	cin>>opcion;
 	return opcion;
 }
-int menuCliente(){
+void menuCliente(){
 	int opcion;
-	cout<<"****BIENVENIDO, JUGADOR****"<<endl;
-	cout<<"1. JUGAR"<<endl; //FALLA
-	cout<<"2.Ver puntuaciones"<<endl; //FALLA
-	cout<<"3.Salir"<<endl;
-	cout<<"Elige una opcion: ";
-	cin>>opcion;
-	return opcion;
+	cout<<"****BIENVENIDO USUARIO****"<<endl;
+	cout<<"AHORA MISMO USTED ESTÁ JUGANDO A WORDLE"<<endl;
+	cout<<"......................................."<<endl;
+	cout<<"......................................."<<endl;
+
 }
 
 
@@ -155,38 +153,8 @@ int main(int argc, char *argv[]) {
 					}
 				}while(opcionA!=0);
 			}else if(resul ==2){
-				do{
-					opcionC = menuCliente();
-					switch(opcionC){
-						case 1:
-							sprintf(sendBuff,"%d",opcionC);
-							send(s, sendBuff, sizeof(sendBuff), 0);//Envia la temática al servidor
-							cout<<"Seleccionar temática: "<<endl;
-							cout<<"1.Verbos"<<endl;
-							cout<<"2.Objetos"<<endl;
-							cout<<"3.Cuerpo humano"<<endl;
-							cout<<"4.Animales"<<endl;
-							cout<<"5.Lugares"<<endl;
-							cout<<"6.Todas las palabras"<<endl;
-							cout<<"Tematica Seleccionada: (Numero)";cin>>tematicaJuego;
-							sprintf(sendBuff,"%d",tematicaJuego);
-							send(s, sendBuff, sizeof(sendBuff), 0);
-							//ESPERA RESPUESTA
-							recv(s, recvBuff, sizeof(recvBuff), 0);
-							sprintf(recvBuff,"%s",palabraJuego);
-							jugarWordle(palabraJuego);
-							break;
-						case 2://VER PUNTUACIONES
-						break;
-						case 3:
-							cout<<"AGUR"<<endl;
-							closesocket(s);
-							WSACleanup();
-							exit(0);
-							break;
-						default: cout<<"La opcion no es correcta"<<endl;
-					}
-				}while(opcionC!=0);
+					menuCliente();
+
 			}else{
 				cout<<"El Inicio de Sesion no ha sido correcto"<<endl;
 				menu();
